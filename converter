@@ -1,0 +1,21 @@
+import requests
+
+base_url = 'http://data.fixer.io/api/latest?access_key='
+API_KEY = '' # get the API KEY from fixer.io
+
+full_url = f'{base_url}{API_KEY}'
+
+data = requests.get(full_url).json()
+
+from_curr = input('Convert from: ')
+to_curr = input('To: ')
+amount = int(input('Amount to convert: '))
+
+if from_curr == 'EUR':
+    result = amount * data['rates'][to_curr]
+elif to_curr == 'EUR':
+    result = 1/data['rates'][from_curr] * amount
+else:
+    result = data['rates'][to_curr]/data['rates'][from_curr] * amount
+
+print(f'\n{amount} {from_curr} = {round(result,2)} {to_curr}')
